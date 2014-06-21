@@ -1,6 +1,8 @@
+# include "stdafx.h"
 # include <iostream>
 # include <time.h>
-#include <stdlib.h> 
+# include <string>
+# include <stdlib.h> 
 
 using namespace std;
 
@@ -9,6 +11,11 @@ using namespace std;
 //Devuelve una casilla random.
 int casillaRandom(){
 	return rand() % BOARD_SIZE;
+}
+//Pila receptora
+struct pila
+{
+		int v[BOARD_SIZE];
 }
 
 //Devuelve un tile random, entre 2 o 4.
@@ -34,37 +41,56 @@ srand(time(NULL));
    
    bool gameEnded = false;
 
-   while(!gameEnded){
+   while(!gameEnded)
+		{ int j = 0;
+			
    		//2 Mostramos el trablero
-		   for(int i=0; i < BOARD_SIZE; i++){
-		   	for(int j = 0; j < BOARD_SIZE; j++){
-		   		cout << tablero[i][j];
-		   		cout << " ";
-		   	}
+		   for(int i=0; i < BOARD_SIZE; i++)
+		   {
+		   	for( int j = 0; ; j < BOARD_SIZE; j++)
+				{
+		   			cout << tablero[i][j];
+		   			cout << " ";
+		   		}
 		   	cout << "\n";
 		   }
 		   //3 Esperamos a que el usuario ingrese una flecha, si no es eso, no pasa nada. Si pone la q, sale del juego.
 		   char userInput;
 		   cin >> userInput;
-
-		   cout << "Usted jugo " << userInput << "\n\n";
+		   if(userInput == 'q')
+				{
+		   		gameEnded = true;
+				}
+		   else
+				{
+			   cout << "Usted jugo " << userInput << "\n\n";
 
 			//4 Actualizamos el tablero
-		   	//switch(userInput){
-		   //		case 'w': 
-		   	//}
+		   	switch(userInput)
+				{
+		   		case 'w': pila up[BOARD_SIZE];
+						for(int i=0; i<BOARD_SIZE; i++)
+						{   
+							up[i].v[i]=tablero[i][j];
+							for(int k=i+1; k<BOARD_SIZE;k++)
+								{
+									while(up[i].v[i]!=0 && up[i].v[k]!=0)
+									{
+										if(up[i].v[i]!=up[i].v[k])
+											{
+												continue;
+											}
+										else
+										{
+											up[i].v[i]+=up[i].v[k];
+											up[i].v[k]=0;
+										}
+						}
+					
+		   		}
    			//5 Se decide si se pierde o se gana, y se muestra el mensaje correcto o si no, se vuelve al paso 2
-
-
-		   if(userInput == 'q'){
-		   		gameEnded = true;
-		   }else{
-		   		
-		   }
+				}
    }
    
    
 }
-
-
-
